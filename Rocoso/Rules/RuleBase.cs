@@ -76,9 +76,9 @@ namespace Rocoso.Rules
 
         public abstract Task<IRuleResult> Execute(T target, CancellationToken token);
 
-        private IPropertyAccess ToPropertyAccessor(T target)
+        private IRegisteredPropertyAccess ToPropertyAccessor(T target)
         {
-            return target as IPropertyAccess ?? throw new Exception("Target must inherit from Base<> to use ReadPropertyValue method");
+            return target as IRegisteredPropertyAccess ?? throw new Exception("Target must inherit from Base<> to use ReadPropertyValue method");
         }
 
         /// <summary>

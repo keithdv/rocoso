@@ -13,16 +13,6 @@ using System.Threading.Tasks;
 namespace Rocoso
 {
 
-    internal interface IPropertyAccess
-    {
-        IPropertyValue ReadPropertyValue(string propertyName);
-        IPropertyValue ReadPropertyValue(IRegisteredProperty registeredProperty);
-        P ReadProperty<P>(IRegisteredProperty<P> registeredProperty);
-        void SetProperty<P>(IRegisteredProperty<P> registeredProperty, P value);
-        void LoadProperty<P>(IRegisteredProperty<P> registeredProperty, P value);
-
-    }
-
     public interface IBase : IRocosoObject, IPortalTarget
     {
         /// <summary>
@@ -37,7 +27,7 @@ namespace Rocoso
     }
 
     [PortalDataContract]
-    public abstract class Base<T> : IRocosoObject, IBase, IPortalTarget, IPropertyAccess, ISetParent
+    public abstract class Base<T> : IRocosoObject, IBase, IPortalTarget, IRegisteredPropertyAccess, ISetParent
         where T : Base<T>
     {
 
@@ -110,27 +100,27 @@ namespace Rocoso
             StartAllActions();
         }
 
-        P IPropertyAccess.ReadProperty<P>(IRegisteredProperty<P> registeredProperty)
+        P IRegisteredPropertyAccess.ReadProperty<P>(IRegisteredProperty<P> registeredProperty)
         {
             return PropertyValueManager.ReadProperty(registeredProperty);
         }
                
-        void IPropertyAccess.SetProperty<P>(IRegisteredProperty<P> registeredProperty, P value)
+        void IRegisteredPropertyAccess.SetProperty<P>(IRegisteredProperty<P> registeredProperty, P value)
         {
             PropertyValueManager.LoadProperty(registeredProperty, value);
         }
 
-        void IPropertyAccess.LoadProperty<P>(IRegisteredProperty<P> registeredProperty, P value)
+        void IRegisteredPropertyAccess.LoadProperty<P>(IRegisteredProperty<P> registeredProperty, P value)
         {
             PropertyValueManager.LoadProperty(registeredProperty, value);
         }
 
-        IPropertyValue IPropertyAccess.ReadPropertyValue(string propertyName)
+        IPropertyValue IRegisteredPropertyAccess.ReadPropertyValue(string propertyName)
         {
             return PropertyValueManager.ReadProperty(propertyName);
         }
 
-        IPropertyValue IPropertyAccess.ReadPropertyValue(IRegisteredProperty registeredProperty)
+        IPropertyValue IRegisteredPropertyAccess.ReadPropertyValue(IRegisteredProperty registeredProperty)
         {
             return PropertyValueManager.ReadProperty(registeredProperty);
         }

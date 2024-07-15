@@ -22,7 +22,7 @@ namespace Rocoso
 
     }
 
-    public abstract class ValidateListBase<T, I> : ListBase<T, I>, IValidateListBase<I>, IValidateListBase, INotifyPropertyChanged, IPropertyAccess
+    public abstract class ValidateListBase<T, I> : ListBase<T, I>, IValidateListBase<I>, IValidateListBase, INotifyPropertyChanged, IRegisteredPropertyAccess
         where T : ValidateListBase<T, I>
         where I : IValidateBase
     {
@@ -100,7 +100,7 @@ namespace Rocoso
         IEnumerable<string> IValidateBase.BrokenRuleMessages => RuleManager.Results.Where(x => x.IsError).SelectMany(x => x.PropertyErrorMessages).Select(x => x.Value);
 
 
-        void IPropertyAccess.SetProperty<P>(IRegisteredProperty<P> registeredProperty, P value)
+        void IRegisteredPropertyAccess.SetProperty<P>(IRegisteredProperty<P> registeredProperty, P value)
         {
             PropertyValueManager.SetProperty(registeredProperty, value);
         }

@@ -25,7 +25,7 @@ namespace Rocoso
     }
 
     [PortalDataContract]
-    public abstract class ValidateBase<T> : Base<T>, IValidateBase, INotifyPropertyChanged, IPropertyAccess
+    public abstract class ValidateBase<T> : Base<T>, IValidateBase, INotifyPropertyChanged, IRegisteredPropertyAccess
         where T : ValidateBase<T>
     {
 
@@ -69,7 +69,7 @@ namespace Rocoso
             }
         }
 
-        void IPropertyAccess.SetProperty<P>(IRegisteredProperty<P> registeredProperty, P value)
+        void IRegisteredPropertyAccess.SetProperty<P>(IRegisteredProperty<P> registeredProperty, P value)
         {
             PropertyValueManager.SetProperty(registeredProperty, value);
         }

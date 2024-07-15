@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Rocoso.Core;
 
 namespace Rocoso.Rules
 {
@@ -9,7 +10,7 @@ namespace Rocoso.Rules
 
         public IValidateBase Target { get; set; }
 
-        internal IPropertyAccess TargetSet => (IPropertyAccess)Target;
+        internal IRegisteredPropertyAccess TargetSet => (IRegisteredPropertyAccess)Target;
 
 
 

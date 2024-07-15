@@ -34,7 +34,7 @@ namespace Rocoso
         Task<I> CreateAdd(params object[] criteria);
     }
 
-    public abstract class ListBase<T, I> : ObservableCollection<I>, IRocosoObject, IListBase<I>, IListBase, IReadOnlyListBase<I>, IPortalTarget, IPropertyAccess, ISetParent
+    public abstract class ListBase<T, I> : ObservableCollection<I>, IRocosoObject, IListBase<I>, IListBase, IReadOnlyListBase<I>, IPortalTarget, IRegisteredPropertyAccess, ISetParent
         where T : ListBase<T, I>
         where I : IBase
     {
@@ -122,27 +122,27 @@ namespace Rocoso
             return item;
         }
 
-        P IPropertyAccess.ReadProperty<P>(IRegisteredProperty<P> registeredProperty)
+        P IRegisteredPropertyAccess.ReadProperty<P>(IRegisteredProperty<P> registeredProperty)
         {
             return PropertyValueManager.ReadProperty(registeredProperty);
         }
 
-        void IPropertyAccess.SetProperty<P>(IRegisteredProperty<P> registeredProperty, P value)
+        void IRegisteredPropertyAccess.SetProperty<P>(IRegisteredProperty<P> registeredProperty, P value)
         {
             PropertyValueManager.LoadProperty(registeredProperty, value);
         }
 
-        void IPropertyAccess.LoadProperty<P>(IRegisteredProperty<P> registeredProperty, P value)
+        void IRegisteredPropertyAccess.LoadProperty<P>(IRegisteredProperty<P> registeredProperty, P value)
         {
             PropertyValueManager.LoadProperty(registeredProperty, value);
         }
 
-        IPropertyValue IPropertyAccess.ReadPropertyValue(string propertyName)
+        IPropertyValue IRegisteredPropertyAccess.ReadPropertyValue(string propertyName)
         {
             return PropertyValueManager.ReadProperty(propertyName);
         }
 
-        IPropertyValue IPropertyAccess.ReadPropertyValue(IRegisteredProperty registeredProperty)
+        IPropertyValue IRegisteredPropertyAccess.ReadPropertyValue(IRegisteredProperty registeredProperty)
         {
             return PropertyValueManager.ReadProperty(registeredProperty);
         }
